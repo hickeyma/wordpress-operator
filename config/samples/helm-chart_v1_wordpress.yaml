@@ -1,0 +1,186 @@
+apiVersion: helm-chart.example.com/v1
+kind: Wordpress
+metadata:
+  name: wordpress-sample
+spec:
+  # Default values copied from <project_dir>/helm-charts/wordpress/values.yaml
+  affinity: {}
+  allowEmptyPassword: true
+  allowOverrideNone: false
+  args: []
+  autoscaling:
+    enabled: false
+    maxReplicas: 11
+    minReplicas: 1
+  clusterDomain: cluster.local
+  command: []
+  commonAnnotations: {}
+  commonLabels: {}
+  containerPorts:
+    http: 8080
+    https: 8443
+  containerSecurityContext:
+    enabled: true
+    runAsUser: 1001
+  customHTAccessCM: null
+  customLivenessProbe: {}
+  customPostInitScripts: {}
+  customReadinessProbe: {}
+  externalDatabase:
+    database: bitnami_wordpress
+    host: localhost
+    password: ""
+    port: 3306
+    user: bn_wordpress
+  extraDeploy: []
+  extraEnvVars: []
+  extraEnvVarsCM: null
+  extraEnvVarsSecret: null
+  extraVolumeMounts: []
+  extraVolumes: []
+  hostAliases:
+  - hostnames:
+    - status.localhost
+    ip: 127.0.0.1
+  htaccessPersistenceEnabled: false
+  image:
+    debug: false
+    pullPolicy: IfNotPresent
+    registry: docker.io
+    repository: bitnami/wordpress
+    tag: 5.6.2-debian-10-r8
+  ingress:
+    annotations: {}
+    apiVersion: null
+    certManager: false
+    enabled: false
+    hostname: wordpress.local
+    path: /
+    pathType: ImplementationSpecific
+    secrets: []
+    tls: false
+  initContainers: {}
+  kubeVersion: null
+  livenessProbe:
+    enabled: true
+    failureThreshold: 6
+    httpGet:
+      httpHeaders: []
+      path: /wp-admin/install.php
+      port: http
+      scheme: HTTP
+    initialDelaySeconds: 120
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 5
+  mariadb:
+    architecture: standalone
+    auth:
+      database: bitnami_wordpress
+      password: ""
+      rootPassword: ""
+      username: bn_wordpress
+    enabled: true
+    primary:
+      persistence:
+        accessModes:
+        - ReadWriteOnce
+        enabled: true
+        size: 8Gi
+  metrics:
+    enabled: false
+    image:
+      pullPolicy: IfNotPresent
+      registry: docker.io
+      repository: bitnami/apache-exporter
+      tag: 0.8.0-debian-10-r313
+    resources:
+      limits: {}
+      requests: {}
+    service:
+      annotations:
+        prometheus.io/port: '{{ .Values.metrics.service.port }}'
+        prometheus.io/scrape: "true"
+      port: 9117
+    serviceMonitor:
+      additionalLabels: {}
+      enabled: false
+      honorLabels: false
+      interval: 30s
+  nodeAffinityPreset:
+    key: ""
+    type: ""
+    values: []
+  nodeSelector: {}
+  pdb:
+    create: false
+    minAvailable: 1
+  persistence:
+    accessMode: ReadWriteOnce
+    dataSource: {}
+    enabled: true
+    size: 10Gi
+  podAffinityPreset: ""
+  podAnnotations: {}
+  podAntiAffinityPreset: soft
+  podLabels: {}
+  podSecurityContext:
+    enabled: true
+    fsGroup: 1001
+  readinessProbe:
+    enabled: true
+    failureThreshold: 6
+    httpGet:
+      httpHeaders: []
+      path: /wp-login.php
+      port: http
+      scheme: HTTP
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 5
+  replicaCount: 1
+  resources:
+    limits: {}
+    requests:
+      cpu: 300m
+      memory: 512Mi
+  service:
+    annotations: {}
+    externalTrafficPolicy: Cluster
+    httpsPort: 443
+    httpsTargetPort: https
+    loadBalancerSourceRanges: []
+    nodePorts:
+      http: ""
+      https: ""
+    port: 80
+    type: LoadBalancer
+  serviceAccountName: default
+  sidecars: {}
+  tolerations: {}
+  updateStrategy:
+    type: RollingUpdate
+  volumePermissions:
+    enabled: false
+    image:
+      pullPolicy: Always
+      registry: docker.io
+      repository: bitnami/bitnami-shell
+      tag: "10"
+    resources:
+      limits: {}
+      requests: {}
+    securityContext:
+      runAsUser: 0
+  wordpressBlogName: User's Blog!
+  wordpressEmail: user@example.com
+  wordpressExtraConfigContent: ""
+  wordpressFirstName: FirstName
+  wordpressLastName: LastName
+  wordpressScheme: http
+  wordpressSkipInstall: false
+  wordpressTablePrefix: wp_
+  wordpressUsername: user
+  
+  

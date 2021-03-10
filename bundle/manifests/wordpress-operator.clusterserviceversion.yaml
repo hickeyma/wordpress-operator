@@ -1,0 +1,415 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: ClusterServiceVersion
+metadata:
+  annotations:
+    alm-examples: |-
+      [
+        {
+          "apiVersion": "helm-chart.example.com/v1",
+          "kind": "Wordpress",
+          "metadata": {
+            "name": "wordpress-sample"
+          },
+          "spec": {
+            "affinity": {},
+            "allowEmptyPassword": true,
+            "allowOverrideNone": false,
+            "args": [],
+            "autoscaling": {
+              "enabled": false,
+              "maxReplicas": 11,
+              "minReplicas": 1
+            },
+            "clusterDomain": "cluster.local",
+            "command": [],
+            "commonAnnotations": {},
+            "commonLabels": {},
+            "containerPorts": {
+              "http": 8080,
+              "https": 8443
+            },
+            "containerSecurityContext": {
+              "enabled": true,
+              "runAsUser": 1001
+            },
+            "customHTAccessCM": null,
+            "customLivenessProbe": {},
+            "customPostInitScripts": {},
+            "customReadinessProbe": {},
+            "externalDatabase": {
+              "database": "bitnami_wordpress",
+              "host": "localhost",
+              "password": "",
+              "port": 3306,
+              "user": "bn_wordpress"
+            },
+            "extraDeploy": [],
+            "extraEnvVars": [],
+            "extraEnvVarsCM": null,
+            "extraEnvVarsSecret": null,
+            "extraVolumeMounts": [],
+            "extraVolumes": [],
+            "hostAliases": [
+              {
+                "hostnames": [
+                  "status.localhost"
+                ],
+                "ip": "127.0.0.1"
+              }
+            ],
+            "htaccessPersistenceEnabled": false,
+            "image": {
+              "debug": false,
+              "pullPolicy": "IfNotPresent",
+              "registry": "docker.io",
+              "repository": "bitnami/wordpress",
+              "tag": "5.6.2-debian-10-r8"
+            },
+            "ingress": {
+              "annotations": {},
+              "apiVersion": null,
+              "certManager": false,
+              "enabled": false,
+              "hostname": "wordpress.local",
+              "path": "/",
+              "pathType": "ImplementationSpecific",
+              "secrets": [],
+              "tls": false
+            },
+            "initContainers": {},
+            "kubeVersion": null,
+            "livenessProbe": {
+              "enabled": true,
+              "failureThreshold": 6,
+              "httpGet": {
+                "httpHeaders": [],
+                "path": "/wp-admin/install.php",
+                "port": "http",
+                "scheme": "HTTP"
+              },
+              "initialDelaySeconds": 120,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "timeoutSeconds": 5
+            },
+            "mariadb": {
+              "architecture": "standalone",
+              "auth": {
+                "database": "bitnami_wordpress",
+                "password": "",
+                "rootPassword": "",
+                "username": "bn_wordpress"
+              },
+              "enabled": true,
+              "primary": {
+                "persistence": {
+                  "accessModes": [
+                    "ReadWriteOnce"
+                  ],
+                  "enabled": true,
+                  "size": "8Gi"
+                }
+              }
+            },
+            "metrics": {
+              "enabled": false,
+              "image": {
+                "pullPolicy": "IfNotPresent",
+                "registry": "docker.io",
+                "repository": "bitnami/apache-exporter",
+                "tag": "0.8.0-debian-10-r313"
+              },
+              "resources": {
+                "limits": {},
+                "requests": {}
+              },
+              "service": {
+                "annotations": {
+                  "prometheus.io/port": "{{ .Values.metrics.service.port }}",
+                  "prometheus.io/scrape": "true"
+                },
+                "port": 9117
+              },
+              "serviceMonitor": {
+                "additionalLabels": {},
+                "enabled": false,
+                "honorLabels": false,
+                "interval": "30s"
+              }
+            },
+            "nodeAffinityPreset": {
+              "key": "",
+              "type": "",
+              "values": []
+            },
+            "nodeSelector": {},
+            "pdb": {
+              "create": false,
+              "minAvailable": 1
+            },
+            "persistence": {
+              "accessMode": "ReadWriteOnce",
+              "dataSource": {},
+              "enabled": true,
+              "size": "10Gi"
+            },
+            "podAffinityPreset": "",
+            "podAnnotations": {},
+            "podAntiAffinityPreset": "soft",
+            "podLabels": {},
+            "podSecurityContext": {
+              "enabled": true,
+              "fsGroup": 1001
+            },
+            "readinessProbe": {
+              "enabled": true,
+              "failureThreshold": 6,
+              "httpGet": {
+                "httpHeaders": [],
+                "path": "/wp-login.php",
+                "port": "http",
+                "scheme": "HTTP"
+              },
+              "initialDelaySeconds": 30,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "timeoutSeconds": 5
+            },
+            "replicaCount": 1,
+            "resources": {
+              "limits": {},
+              "requests": {
+                "cpu": "300m",
+                "memory": "512Mi"
+              }
+            },
+            "service": {
+              "annotations": {},
+              "externalTrafficPolicy": "Cluster",
+              "httpsPort": 443,
+              "httpsTargetPort": "https",
+              "loadBalancerSourceRanges": [],
+              "nodePorts": {
+                "http": "",
+                "https": ""
+              },
+              "port": 80,
+              "type": "LoadBalancer"
+            },
+            "serviceAccountName": "default",
+            "sidecars": {},
+            "tolerations": {},
+            "updateStrategy": {
+              "type": "RollingUpdate"
+            },
+            "volumePermissions": {
+              "enabled": false,
+              "image": {
+                "pullPolicy": "Always",
+                "registry": "docker.io",
+                "repository": "bitnami/bitnami-shell",
+                "tag": "10"
+              },
+              "resources": {
+                "limits": {},
+                "requests": {}
+              },
+              "securityContext": {
+                "runAsUser": 0
+              }
+            },
+            "wordpressBlogName": "User's Blog!",
+            "wordpressEmail": "user@example.com",
+            "wordpressExtraConfigContent": "",
+            "wordpressFirstName": "FirstName",
+            "wordpressLastName": "LastName",
+            "wordpressScheme": "http",
+            "wordpressSkipInstall": false,
+            "wordpressTablePrefix": "wp_",
+            "wordpressUsername": "user"
+          }
+        }
+      ]
+    capabilities: Basic Install
+    operators.operatorframework.io/builder: operator-sdk-v1.3.2
+    operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
+  name: wordpress-operator.v0.0.1
+  namespace: placeholder
+spec:
+  apiservicedefinitions: {}
+  customresourcedefinitions:
+    owned:
+    - kind: Wordpress
+      name: wordpresses.helm-chart.example.com
+      version: v1
+  description: WordPress Helm
+  displayName: WordPress Helm
+  icon:
+  - base64data: ""
+    mediatype: ""
+  install:
+    spec:
+      clusterPermissions:
+      - rules:
+        - apiGroups:
+          - ""
+          resources:
+          - namespaces
+          verbs:
+          - get
+        - apiGroups:
+          - ""
+          resources:
+          - secrets
+          verbs:
+          - '*'
+        - apiGroups:
+          - ""
+          resources:
+          - events
+          verbs:
+          - create
+        - apiGroups:
+          - helm-chart.example.com
+          resources:
+          - wordpresses
+          - wordpresses/status
+          - wordpresses/finalizers
+          verbs:
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
+        - apiGroups:
+          - ""
+          resources:
+          - pods
+          - services
+          - services/finalizers
+          - endpoints
+          - persistentvolumeclaims
+          - events
+          - configmaps
+          - secrets
+          verbs:
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
+        - apiGroups:
+          - apps
+          resources:
+          - deployments
+          - daemonsets
+          - replicasets
+          - statefulsets
+          verbs:
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
+        - apiGroups:
+          - authentication.k8s.io
+          resources:
+          - tokenreviews
+          verbs:
+          - create
+        - apiGroups:
+          - authorization.k8s.io
+          resources:
+          - subjectaccessreviews
+          verbs:
+          - create
+        serviceAccountName: default
+      deployments:
+      - name: wordpress-operator-controller-manager
+        spec:
+          replicas: 1
+          selector:
+            matchLabels:
+              control-plane: controller-manager
+          strategy: {}
+          template:
+            metadata:
+              labels:
+                control-plane: controller-manager
+            spec:
+              containers:
+              - args:
+                - --secure-listen-address=0.0.0.0:8443
+                - --upstream=http://127.0.0.1:8080/
+                - --logtostderr=true
+                - --v=10
+                image: gcr.io/kubebuilder/kube-rbac-proxy:v0.5.0
+                name: kube-rbac-proxy
+                ports:
+                - containerPort: 8443
+                  name: https
+                resources: {}
+              - args:
+                - --metrics-addr=127.0.0.1:8080
+                - --enable-leader-election
+                - --leader-election-id=wordpress-operator
+                image: docker.io/mhickey/wordpress-operator:v0.0.1
+                name: manager
+                resources:
+                  limits:
+                    cpu: 100m
+                    memory: 90Mi
+                  requests:
+                    cpu: 100m
+                    memory: 60Mi
+              terminationGracePeriodSeconds: 10
+      permissions:
+      - rules:
+        - apiGroups:
+          - ""
+          resources:
+          - configmaps
+          verbs:
+          - get
+          - list
+          - watch
+          - create
+          - update
+          - patch
+          - delete
+        - apiGroups:
+          - ""
+          resources:
+          - events
+          verbs:
+          - create
+          - patch
+        serviceAccountName: default
+    strategy: deployment
+  installModes:
+  - supported: false
+    type: OwnNamespace
+  - supported: false
+    type: SingleNamespace
+  - supported: false
+    type: MultiNamespace
+  - supported: true
+    type: AllNamespaces
+  keywords:
+  - WordPress
+  - Helm
+  - Brads Barbells
+  links:
+  - name: Wordpress Operator
+    url: https://wordpress-operator.domain
+  maturity: alpha
+  provider:
+    name: Brads Barbells
+    url: www.bradsbarbells.com
+  version: 0.0.1

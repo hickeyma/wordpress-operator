@@ -1,0 +1,8 @@
+domain: example.com
+layout: helm.sdk.operatorframework.io/v1
+projectName: wordpress-operator
+resources:
+- group: helm-chart
+  kind: Wordpress
+  version: v1
+version: 3-alpha

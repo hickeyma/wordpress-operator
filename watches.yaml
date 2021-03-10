@@ -1,0 +1,6 @@
+# Use the 'create api' subcommand to add watches to this file.
+- group: helm-chart.example.com
+  version: v1
+  kind: Wordpress
+  chart: helm-charts/wordpress
+# +kubebuilder:scaffold:watch
